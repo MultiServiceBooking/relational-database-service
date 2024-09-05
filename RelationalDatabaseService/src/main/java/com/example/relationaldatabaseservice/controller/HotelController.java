@@ -5,11 +5,9 @@ import com.example.relationaldatabaseservice.dto.RoomDto;
 import com.example.relationaldatabaseservice.model.Hotel;
 import com.example.relationaldatabaseservice.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +26,19 @@ public class HotelController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/search")
+    public List<HotelDto> searchHotels(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "0") int numberOfGuests) {
+
+        List<Hotel> hotels = hotelService.searchHotels(address, startDate, endDate, numberOfGuests);
+        return hotels.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     private HotelDto convertToDTO(Hotel hotel) {
         HotelDto dto = new HotelDto();
         dto.setId(hotel.getId());
@@ -36,6 +47,8 @@ public class HotelController {
         dto.setStarRating(hotel.getStarRating());
         dto.setPhoneNumber(hotel.getPhoneNumber());
         dto.setEmail(hotel.getEmail());
+        dto.setDescription(hotel.getDescription());
+        dto.setImage(hotel.getImage());
         return dto;
     }
 

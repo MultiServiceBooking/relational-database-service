@@ -20,16 +20,11 @@ public class RoomService {
     private ReservationRepository reservationRepository;
 
     public List<Room> searchAvailableRooms(int guestCount, LocalDate startDate, LocalDate endDate, Long hotelId) {
-        // Find all rooms for the specified hotel
         List<Room> allRooms = roomRepository.findByHotelId(hotelId);
-
-        // Find all reservations overlapping with the given dates
         List<Long> reservedRoomIds = reservationRepository.findOverlappingRoomIds(startDate, endDate);
-
-        // Filter rooms based on capacity and reservation status
         return allRooms.stream()
-                .filter(room -> room.getCapacity() >= guestCount) // Check capacity
-                .filter(room -> !reservedRoomIds.contains(room.getId())) // Check reservation
+                .filter(room -> room.getCapacity() >= guestCount)
+                .filter(room -> !reservedRoomIds.contains(room.getId()))
                 .collect(Collectors.toList());
     }
 }

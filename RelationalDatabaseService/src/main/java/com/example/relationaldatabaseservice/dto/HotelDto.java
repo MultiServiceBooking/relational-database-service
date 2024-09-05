@@ -9,6 +9,8 @@ public class HotelDto {
     private int starRating;
     private String phoneNumber;
     private String email;
+    private String image;
+    private String description;
 
     public Long getId() {
         return id;
@@ -58,4 +60,19 @@ public class HotelDto {
         this.email = email;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

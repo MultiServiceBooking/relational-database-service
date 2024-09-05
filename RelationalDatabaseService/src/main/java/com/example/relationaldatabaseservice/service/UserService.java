@@ -1,5 +1,7 @@
 package com.example.relationaldatabaseservice.service;
 
+import com.example.relationaldatabaseservice.dto.UserDto;
+import com.example.relationaldatabaseservice.dto.UserGatewayDto;
 import com.example.relationaldatabaseservice.model.User;
 import com.example.relationaldatabaseservice.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -33,8 +35,33 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional
-    public void rollbackUser(Long userId) {
-        userRepository.deleteById(userId);
+    public UserGatewayDto findUserByUsername(String username) {
+        User user = userRepository.findByEmail(username);
+        if (user != null) {
+            return new UserGatewayDto(user.getEmail(), user.getPassword(), user.getRole().name());
+        } else {
+            return null;
+        }
+    }
+
+    public UserDto findByUsername(String username) {
+        User user = userRepository.findByEmail(username);
+        if (user != null) {
+            return convertToUserDto(user);
+        } else {
+            return null;
+        }
+    }
+
+    private UserDto convertToUserDto(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setSurname(user.getSurname());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        userDto.setPhoneNumber(user.getPhoneNumber());
+        userDto.setRole(user.getRole());
+        return userDto;
     }
 }

@@ -41,6 +41,7 @@ public class RoomController {
         dto.setRoomStatus(room.getRoomStatus());
         dto.setPrice(room.getPrice());
         dto.setDescription(room.getDescription());
+        dto.setImage(room.getImage());
         return dto;
     }
 }

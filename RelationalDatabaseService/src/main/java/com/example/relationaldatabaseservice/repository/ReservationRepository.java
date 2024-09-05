@@ -13,4 +13,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "((r.startDate <= :endDate AND r.endDate >= :startDate))")
     List<Long> findOverlappingRoomIds(@Param("startDate") LocalDate startDate,
                                       @Param("endDate") LocalDate endDate);
+    List<Reservation> findByRoomIdAndStartDateBeforeAndEndDateAfter(Long roomId, LocalDate endDate, LocalDate startDate);
+    List<Reservation> findByUserId(Long userId);
 }
