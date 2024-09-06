@@ -3,13 +3,15 @@ package com.example.relationaldatabaseservice.dto;
 import com.example.relationaldatabaseservice.enums.RoomStatus;
 import com.example.relationaldatabaseservice.enums.RoomType;
 
+import java.util.List;
+
 public class RoomDto {
     private Long id;
     private RoomType roomType;
     private RoomStatus roomStatus;
     private double price;
     private String description;
-    private String image;
+    private List<String> images;
 
     public Long getId() {
         return id;
@@ -51,11 +53,11 @@ public class RoomDto {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

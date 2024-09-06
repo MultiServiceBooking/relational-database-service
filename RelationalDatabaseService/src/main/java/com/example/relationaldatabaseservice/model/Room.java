@@ -4,6 +4,8 @@ import com.example.relationaldatabaseservice.enums.RoomStatus;
 import com.example.relationaldatabaseservice.enums.RoomType;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "rooms")
 public class Room {
@@ -33,8 +35,10 @@ public class Room {
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
-    @Column(nullable = false)
-    private String image;
+    @ElementCollection
+    @CollectionTable(name = "room_images", joinColumns = @JoinColumn(name = "room_id"))
+    @Column(name = "image_url")
+    private List<String> images;
 
     @Column()
 
@@ -94,11 +98,11 @@ public class Room {
         this.hotel = hotel;
     }
 
-    public String getImage() {
-        return image;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

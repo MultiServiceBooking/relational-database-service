@@ -37,4 +37,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<UserDto> getById(@PathVariable String id) {
+        UserDto userDto = userService.findById(id);
+        if(userDto != null) {
+            return ResponseEntity.ok(userDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

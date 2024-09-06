@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -52,6 +54,22 @@ public class UserService {
             return null;
         }
     }
+
+    public UserDto findById(String id) {
+        try {
+            long longId = Long.parseLong(id);
+            Optional<User> optionalUser = userRepository.findById(longId);
+
+            if (optionalUser.isPresent()) {
+                return convertToUserDto(optionalUser.get());
+            } else {
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
 
     private UserDto convertToUserDto(User user) {
         UserDto userDto = new UserDto();

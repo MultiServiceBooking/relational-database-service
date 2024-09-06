@@ -31,8 +31,10 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Room> rooms;
 
-    @Column(nullable = false)
-    private String image;
+    @ElementCollection
+    @CollectionTable(name = "hotel_images", joinColumns = @JoinColumn(name = "hotel_id"))
+    @Column(name = "image_url")
+    private List<String> images;
 
     @Column(nullable = false)
     private String description;
@@ -93,12 +95,12 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-    public String getImage() {
-        return image;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getDescription() {

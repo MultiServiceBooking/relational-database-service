@@ -48,7 +48,7 @@ public class HotelController {
         dto.setPhoneNumber(hotel.getPhoneNumber());
         dto.setEmail(hotel.getEmail());
         dto.setDescription(hotel.getDescription());
-        dto.setImage(hotel.getImage());
+        dto.setImages(hotel.getImages());
         return dto;
     }
 

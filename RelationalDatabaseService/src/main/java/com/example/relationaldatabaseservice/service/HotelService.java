@@ -94,7 +94,7 @@ public class HotelService {
         dto.setRoomStatus(room.getRoomStatus());
         dto.setPrice(room.getPrice());
         dto.setDescription(room.getDescription());
-        dto.setImage(room.getImage());
+        dto.setImages(room.getImages());
         return dto;
     }
 
