@@ -1,6 +1,8 @@
 package com.example.relationaldatabaseservice.controller;
 
+import com.example.relationaldatabaseservice.dto.HotelDto;
 import com.example.relationaldatabaseservice.dto.ReservationDto;
+import com.example.relationaldatabaseservice.model.Hotel;
 import com.example.relationaldatabaseservice.model.Reservation;
 import com.example.relationaldatabaseservice.service.ReservationMapper;
 import com.example.relationaldatabaseservice.service.ReservationService;
@@ -39,5 +41,11 @@ public class ReservationController {
         LocalDate end = LocalDate.parse(endDate);
 
         return reservationService.createReservation(roomId, start, end, guestCount);
+    }
+
+    @GetMapping("/{id}")
+    public ReservationDto getById(@PathVariable Long id) {
+        Reservation reservation = reservationService.getById(id);
+        return reservationMapper.toReservationDTO(reservation);
     }
 }

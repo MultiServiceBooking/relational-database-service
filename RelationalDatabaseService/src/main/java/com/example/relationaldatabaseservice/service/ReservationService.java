@@ -1,6 +1,7 @@
 package com.example.relationaldatabaseservice.service;
 
 import com.example.relationaldatabaseservice.enums.ReservationStatus;
+import com.example.relationaldatabaseservice.model.Hotel;
 import com.example.relationaldatabaseservice.model.Reservation;
 import com.example.relationaldatabaseservice.model.Room;
 import com.example.relationaldatabaseservice.model.User;
@@ -42,5 +43,12 @@ public class ReservationService {
 
     public List<Reservation> getReservationsByUserId(Long userId) {
         return reservationRepository.findByUserId(userId);
+    }
+
+    public Reservation getById(Long reservationId)
+    {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        return reservation;
     }
 }

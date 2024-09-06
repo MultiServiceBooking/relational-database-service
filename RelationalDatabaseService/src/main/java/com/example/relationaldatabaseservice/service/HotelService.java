@@ -4,6 +4,7 @@ import com.example.relationaldatabaseservice.dto.RoomDto;
 import com.example.relationaldatabaseservice.model.Reservation;
 import com.example.relationaldatabaseservice.model.Room;
 import com.example.relationaldatabaseservice.repository.ReservationRepository;
+import com.example.relationaldatabaseservice.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class HotelService {
 
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
     public List<Hotel> searchHotels(String address, LocalDate startDate, LocalDate endDate, int numberOfGuests) {
         List<Hotel> hotels = hotelRepository.findAll();
@@ -102,5 +105,12 @@ public class HotelService {
         return hotel;
     }
 
-
+    public Hotel getByReservationId(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+        Room room = reservation.getRoom();
+        Long hotelId = room.getHotel().getId();
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new RuntimeException("Hotel not found"));
+    }
 }

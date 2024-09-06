@@ -62,5 +62,11 @@ public class HotelController {
         Hotel hotel = hotelService.getById(id);
         return convertToDTO(hotel);
     }
+
+    @GetMapping("/reservations/{id}")
+    public HotelDto getHotelByReservationId(@PathVariable Long id) {
+        Hotel hotel = hotelService.getByReservationId(id);
+        return convertToDTO(hotel);
+    }
 }
 
