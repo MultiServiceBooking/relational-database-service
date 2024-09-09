@@ -1,43 +1,21 @@
-package com.example.relationaldatabaseservice.model;
+package com.example.relationaldatabaseservice.dto;
 
 import com.example.relationaldatabaseservice.enums.PaymentMethod;
 import com.example.relationaldatabaseservice.enums.PaymentStatus;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "payments")
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PaymentDto {
+
     private Long id;
-
-    @Column(nullable = false)
     private LocalDate paymentDate;
-
-    @Column(nullable = false)
     private double amount;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private PaymentStatus paymentStatus;
-
-    @OneToOne
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    private Long reservationId;
     private PaymentMethod paymentMethod;
-
-    @Column(nullable = false)
     private String currency;
-
-    @Column(nullable = false)
     private String confirmationNumber;
-
-    @Column(nullable = false)
     private String cardLastFourDigits;
 
     public Long getId() {
@@ -72,12 +50,12 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public Long getReservationId() {
+        return reservationId;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
     }
 
     public PaymentMethod getPaymentMethod() {

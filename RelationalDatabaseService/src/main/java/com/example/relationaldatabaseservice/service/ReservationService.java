@@ -25,14 +25,14 @@ public class ReservationService {
     @Autowired
     private UserRepository userRepository;
 
-    public Reservation createReservation(Long roomId, LocalDate startDate, LocalDate endDate, int guestCount) {
+    public Reservation createReservation(Long roomId, LocalDate startDate, LocalDate endDate, int guestCount, Long userId) {
         Room room = roomRepository.findById(roomId).orElseThrow(() -> new RuntimeException("Room not found"));
-        User user = userRepository.findById(1L).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         Reservation reservation = new Reservation();
         reservation.setStartDate(startDate);
         reservation.setEndDate(endDate);
-        reservation.setReservationDate(LocalDate.now()); // Set the current date
+        reservation.setReservationDate(LocalDate.now());
         reservation.setGuestCount(guestCount);
         reservation.setReservationStatus(ReservationStatus.PENDING);
         reservation.setRoom(room);

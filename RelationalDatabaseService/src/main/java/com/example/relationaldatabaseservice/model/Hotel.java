@@ -1,6 +1,9 @@
 package com.example.relationaldatabaseservice.model;
 
+import com.example.relationaldatabaseservice.helper.StringListConverter;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 import java.util.Set;
@@ -31,10 +34,10 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Room> rooms;
 
-    @ElementCollection
-    @CollectionTable(name = "hotel_images", joinColumns = @JoinColumn(name = "hotel_id"))
-    @Column(name = "image_url")
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> images;
+
 
     @Column(nullable = false)
     private String description;

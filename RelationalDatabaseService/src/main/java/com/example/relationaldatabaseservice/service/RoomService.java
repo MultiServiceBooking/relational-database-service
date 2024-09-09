@@ -1,5 +1,6 @@
 package com.example.relationaldatabaseservice.service;
 
+import com.example.relationaldatabaseservice.model.Hotel;
 import com.example.relationaldatabaseservice.model.Room;
 import com.example.relationaldatabaseservice.repository.ReservationRepository;
 import com.example.relationaldatabaseservice.repository.RoomRepository;
@@ -26,5 +27,12 @@ public class RoomService {
                 .filter(room -> room.getCapacity() >= guestCount)
                 .filter(room -> !reservedRoomIds.contains(room.getId()))
                 .collect(Collectors.toList());
+    }
+
+    public Room getById(Long roomId)
+    {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+        return room;
     }
 }

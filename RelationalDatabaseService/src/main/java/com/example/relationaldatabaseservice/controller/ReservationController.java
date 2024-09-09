@@ -7,6 +7,7 @@ import com.example.relationaldatabaseservice.model.Reservation;
 import com.example.relationaldatabaseservice.service.ReservationMapper;
 import com.example.relationaldatabaseservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,17 +32,17 @@ public class ReservationController {
     }
 
     @PostMapping("/create")
-    public Reservation createReservation(
+    public ResponseEntity<ReservationDto> createReservation(
             @RequestParam Long roomId,
             @RequestParam String startDate,
             @RequestParam String endDate,
-            @RequestParam int guestCount) {
+            @RequestParam int guestCount,
+            @RequestParam Long userId) {
 
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-
-        return reservationService.createReservation(roomId, start, end, guestCount);
+        Reservation reservation = reservationService.createReservation(roomId, LocalDate.parse(startDate), LocalDate.parse(endDate), guestCount, userId);
+        return ResponseEntity.ok(reservationMapper.toReservationDTO(reservation));
     }
+
 
     @GetMapping("/{id}")
     public ReservationDto getById(@PathVariable Long id) {

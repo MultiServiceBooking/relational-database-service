@@ -75,6 +75,14 @@ public class HotelService {
     }
 
     public List<Hotel> getAll() {
+        List<Hotel> hotels = hotelRepository.findAll();
+        for(Hotel h : hotels)
+        {
+            for(String image : h.getImages())
+            {
+                System.out.println(image);
+            }
+        }
         return hotelRepository.findAll();
     }
 

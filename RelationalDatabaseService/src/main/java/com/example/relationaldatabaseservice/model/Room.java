@@ -2,6 +2,7 @@ package com.example.relationaldatabaseservice.model;
 
 import com.example.relationaldatabaseservice.enums.RoomStatus;
 import com.example.relationaldatabaseservice.enums.RoomType;
+import com.example.relationaldatabaseservice.helper.StringListConverter;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,9 +36,8 @@ public class Room {
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
-    @ElementCollection
-    @CollectionTable(name = "room_images", joinColumns = @JoinColumn(name = "room_id"))
-    @Column(name = "image_url")
+    @Convert(converter = StringListConverter.class)
+    @Column(columnDefinition = "TEXT")
     private List<String> images;
 
     @Column()

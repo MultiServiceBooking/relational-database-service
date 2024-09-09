@@ -1,5 +1,6 @@
 package com.example.relationaldatabaseservice.controller;
 
+import com.example.relationaldatabaseservice.dto.HotelDto;
 import com.example.relationaldatabaseservice.dto.RoomDto;
 import com.example.relationaldatabaseservice.model.Hotel;
 import com.example.relationaldatabaseservice.model.Room;
@@ -32,6 +33,12 @@ public class RoomController {
         return availableRooms.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}")
+    public RoomDto getRoomById(@PathVariable Long id) {
+        Room room = roomService.getById(id);
+        return convertToDTO(room);
     }
 
     private RoomDto convertToDTO(Room room) {
