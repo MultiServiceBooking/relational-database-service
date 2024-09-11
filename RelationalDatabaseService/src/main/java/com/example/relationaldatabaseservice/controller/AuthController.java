@@ -57,5 +57,29 @@ public class AuthController {
         response.put("message", "User registered successfully");
         return ResponseEntity.status(201).body(response);
     }
+    @PostMapping("/change-password")
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody Map<String, String> passwordData) {
+        String email = passwordData.get("email");
+        String oldPassword = passwordData.get("oldPassword");
+        String newPassword = passwordData.get("newPassword");
+
+        String result = userService.changePassword(email, oldPassword, newPassword);
+        Map<String, String> response = new HashMap<>();
+
+        if ("User not found".equals(result)) {
+            response.put("error", "User with this email address does not exist.");
+            return ResponseEntity.status(404).body(response);
+        } else if ("Incorrect old password".equals(result)) {
+            response.put("error", "Incorrect old password.");
+            return ResponseEntity.status(401).body(response);
+        } else if ("Password change successful".equals(result)) {
+            response.put("message", "Password changed successfully.");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("error", "An unexpected error occurred.");
+        return ResponseEntity.status(500).body(response);
+    }
+
 
 }

@@ -6,6 +6,7 @@ import com.example.relationaldatabaseservice.model.User;
 import com.example.relationaldatabaseservice.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,11 +16,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public String loginUser(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             return "User not found";
-        } else if (!user.getPassword().equals(password)) {
+        } /*else if (!passwordEncoder.matches(password, user.getPassword())) {
+            return "Incorrect password";
+        }*/
+        else if (!password.equals(user.getPassword())) {
             return "Incorrect password";
         }
         return "Success";
@@ -34,6 +41,8 @@ public class UserService {
     }
 
     public void saveUser(User user){
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         userRepository.save(user);
     }
 
@@ -69,6 +78,44 @@ public class UserService {
             return null;
         }
     }
+
+    public UserDto updateUser(Long id, UserDto userDto) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setName(userDto.getName());
+            user.setSurname(userDto.getSurname());
+            user.setEmail(userDto.getEmail());
+            user.setPhoneNumber(userDto.getPhoneNumber());
+            user.setRole(userDto.getRole());
+
+            if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+                //user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                user.setPassword(userDto.getPassword());
+            }
+
+            User updatedUser = userRepository.save(user);
+            return convertToUserDto(updatedUser);
+        } else {
+            return null;
+        }
+    }
+
+    public String changePassword(String email, String oldPassword, String newPassword) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return "User not found";
+        }
+        if (!user.getPassword().equals(oldPassword)) {
+            return "Incorrect old password";
+        }
+
+        ///user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(newPassword);
+        userRepository.save(user);
+        return "Password change successful";
+    }
+
 
 
     private UserDto convertToUserDto(User user) {

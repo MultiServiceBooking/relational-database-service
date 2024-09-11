@@ -5,11 +5,8 @@ import com.example.relationaldatabaseservice.dto.UserGatewayDto;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.relationaldatabaseservice.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/users")
@@ -46,5 +43,16 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        UserDto updatedUser = userService.updateUser(id, userDto);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }
