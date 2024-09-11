@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@SuppressWarnings("ALL")
 @Configuration
 public class SecurityConfig {
 
@@ -18,10 +19,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()   // Isključi CSRF zaštitu
-                .cors().and()       // Omogući CORS ako je potrebno
+                .csrf().disable()
+                .cors().and()
                 .authorizeRequests()
-                .anyRequest().permitAll();  // Dozvoli sve zahteve sa svih portova bez autentifikacije
+                .anyRequest().permitAll();
 
         return http.build();
     }

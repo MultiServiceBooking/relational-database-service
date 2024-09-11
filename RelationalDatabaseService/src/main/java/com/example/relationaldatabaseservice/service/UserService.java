@@ -23,12 +23,12 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             return "User not found";
-        } /*else if (!passwordEncoder.matches(password, user.getPassword())) {
-            return "Incorrect password";
-        }*/
-        else if (!password.equals(user.getPassword())) {
+        } else if (!passwordEncoder.matches(password, user.getPassword())) {
             return "Incorrect password";
         }
+       /* else if (!password.equals(user.getPassword())) {
+            return "Incorrect password";
+        }*/
         return "Success";
     }
 
@@ -88,6 +88,7 @@ public class UserService {
             user.setEmail(userDto.getEmail());
             user.setPhoneNumber(userDto.getPhoneNumber());
             user.setRole(userDto.getRole());
+            user.setHotelId(userDto.getHotelId());
 
             if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
                 //user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -110,8 +111,8 @@ public class UserService {
             return "Incorrect old password";
         }
 
-        ///user.setPassword(passwordEncoder.encode(newPassword));
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        //user.setPassword(newPassword);
         userRepository.save(user);
         return "Password change successful";
     }
@@ -127,6 +128,7 @@ public class UserService {
         userDto.setPassword(user.getPassword());
         userDto.setPhoneNumber(user.getPhoneNumber());
         userDto.setRole(user.getRole());
+        userDto.setHotelId(user.getHotelId());
         return userDto;
     }
 }

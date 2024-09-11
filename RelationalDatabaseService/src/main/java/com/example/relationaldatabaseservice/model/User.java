@@ -37,6 +37,9 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
+    @Column(name = "hotel_id")
+    private Long hotelId;
+
     public Long getId() {
         return id;
     }
@@ -91,5 +94,13 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public Long getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 }

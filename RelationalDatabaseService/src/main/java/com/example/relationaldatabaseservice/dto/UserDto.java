@@ -11,6 +11,7 @@ public class UserDto {
     private String password;
     private String phoneNumber;
     private UserRole role;
+    private Long hotelId;
 
     public Long getId() {
         return id;
@@ -66,5 +67,13 @@ public class UserDto {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public Long getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
     }
 }
