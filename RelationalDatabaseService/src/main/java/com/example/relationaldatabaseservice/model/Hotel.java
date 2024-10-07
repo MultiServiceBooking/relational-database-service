@@ -42,6 +42,12 @@ public class Hotel {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private String checkin;
+
+    @Column(nullable = false)
+    private String checkout;
+
     public Long getId() {
         return id;
     }
@@ -112,5 +118,21 @@ public class Hotel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(String checkin) {
+        this.checkin = checkin;
+    }
+
+    public String getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(String checkout) {
+        this.checkout = checkout;
     }
 }

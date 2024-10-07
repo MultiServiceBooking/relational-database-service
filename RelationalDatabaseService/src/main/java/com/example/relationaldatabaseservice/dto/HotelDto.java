@@ -11,6 +11,8 @@ public class HotelDto {
     private String email;
     private List<String> images;
     private String description;
+    private String checkin;
+    private String checkout;
 
     public Long getId() {
         return id;
@@ -74,5 +76,21 @@ public class HotelDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(String checkin) {
+        this.checkin = checkin;
+    }
+
+    public String getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(String checkout) {
+        this.checkout = checkout;
     }
 }
